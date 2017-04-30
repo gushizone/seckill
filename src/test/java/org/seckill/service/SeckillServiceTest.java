@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -82,12 +83,25 @@ public class SeckillServiceTest {
 //            秒杀未开启
             logger.warn("exposer={}", exposer);
         }
-
-
 //        Exposer{exposed=true, md5='3f6b61b290ad864a1eb9771240b14bc9',
 //                  seckillId=1000,
 //                  now=0, start=0, end=0}
     }
+
+
+    @Test
+    public void executeSeckillProcedure(){
+        long seckillId = 1001;
+        long phone = 13680111010L;
+        Exposer exposer = seckillService.exportSeckillUrl(seckillId);
+        if(exposer.isExposed()) {
+            String md5 = exposer.getMd5();
+            SeckillExecution execution = seckillService.executeSeckillProcedure(seckillId,phone,md5);
+            logger.info(execution.getStateInfo());
+        }
+    }
+
+
 
 
 }
