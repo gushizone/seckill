@@ -14,7 +14,6 @@ public class Seckill {
     private Date endTime;
     private Date createTime;
 
-
     public long getSeckillId() {
         return seckillId;
     }
@@ -39,9 +38,7 @@ public class Seckill {
         this.number = number;
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
+    public Date getStartTime() { return startTime;}
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;

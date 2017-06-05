@@ -14,6 +14,7 @@
             </div>
             <div class="panel-body">
                 <h2 class="text-danger">
+                    <%--字体图标--%>
                     <%--显示time图标--%>
                     <span class="glyphicon glyphicon-time"></span>
                     <%--展示倒计时--%>
@@ -21,11 +22,9 @@
                 </h2>
             </div>
         </div>
-        <%--<div class="panel-body">--%>
-
-        <%--</div>--%>
     </div>
-<%--登录弹出层，输入电话--%>
+
+<%--登录弹出层，输入电话，默认隐藏--%>
 <div id="killPhoneModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -57,7 +56,6 @@
 </div>
 
 
-    <%--<img src="/WEB-INF/true.png" alt="2134234535346">--%>
 
 
 </body>
@@ -79,7 +77,7 @@
 <script src="/resources/script/seckill.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function (){
-//        使用EL表达式传入参数
+//        使用EL表达式传入json参数
         seckill.detail.init({
             seckillId: ${seckill.seckillId},
             startTime: ${seckill.startTime.time},//毫秒

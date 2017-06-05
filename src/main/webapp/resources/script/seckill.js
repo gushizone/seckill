@@ -13,6 +13,7 @@ var seckill = {
             return '/seckill/' + seckillId + '/' + md5 + '/execution';
         }
     },
+    //开始秒杀逻辑
     handleSeckillkill : function (seckillId, node) {
         // 获取秒杀地址，控制显示逻辑，执行秒杀
         node.hide()
@@ -39,9 +40,7 @@ var seckill = {
                                 var state = killResult['state'];
                                 var stateInfo = killResult['stateInfo'];
                                 // 3:显示秒杀结果
-
                                 node.html('<span class="label label-success">'+ stateInfo +'</span>');
-
                             }
                         });
                     });
@@ -77,11 +76,14 @@ var seckill = {
         }else if(nowTime < startTime) {
             // 秒杀未开始,计时绑定（+1s防止时间偏移）
             var killTime = new Date(startTime + 1000);
+            // countdown插件
             seckillBox.countdown(killTime, function (event) {
                 // 时间格式
                 var format = event.strftime('秒杀倒计时：%D天 %H时 %M分 %S秒');
                 seckillBox.html(format);
+            //    时间完成后回调事件
             }).on('finish.countdown', function () {
+                //倒计时结束，秒杀开始
                 // 获取秒杀地址，控制显示逻辑，执行秒杀
                 seckill.handleSeckillkill(seckillId, seckillBox);
             });
@@ -107,18 +109,19 @@ var seckill = {
                 killPhoneModal.modal({
                     show: true,//显示弹出层
                     backdrop: 'static',//禁止位置关闭
-                    keyboard: false//关闭键盘时间
+                    keyboard: false//关闭键盘事件
                 });
 
                 $('#killPhoneBtn').click(function () {
                     var inputPhone = $('#killPhoneKey').val();
                     console.log('inputPhone='+inputPhone);//TODO
                     if(seckill.validatePhone(inputPhone)){
-                        //电话写入cookie
+                        //电话写入cookie，七天有效，路径
                         $.cookie('killPhone', inputPhone, {expires:7,path:'/seckill'});
                         // 刷新页面
                         window.location.reload();
                     }else {
+                        //隐藏再显示
                         $('#killPhoneMessage').hide().html('<label class="label label-danger">手机号错误!</label>').show(300);
                     }
                 });
@@ -128,19 +131,16 @@ var seckill = {
             var startTime = params['startTime'];
             var endTime = params['endTime'];
             var seckillId = params['seckillId'];
+            //ajax请求，获取json响应
             $.get(seckill.URL.now(), {}, function (result) {
                 if(result && result['success']) {
                     var nowTime = result['data'];
                     // 时间判断,计时交互
                     seckill.countdown(seckillId,nowTime,startTime,endTime);
-
                 }else {
                     console.log('result:'+result);
                 }
-
             });
-
-
 
         }
     }

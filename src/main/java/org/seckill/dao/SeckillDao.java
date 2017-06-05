@@ -31,27 +31,18 @@ public interface SeckillDao {
 
     /**
      * 根据偏移量查询秒杀商品列表
-     * @param offet
+     * @param offset
      * @param limit
      * @return
      * 由于java不会保存形参记录（名），所有多参需要包装或使用mybatis提供的注解@Param
      */
-    List<Seckill> queryAll(@Param("offset") int offet, @Param("limit") int limit);
+    List<Seckill> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 
     /**
      * 使用存储过程执行秒杀
      * @param paramMap
      */
     void killByProcedure(Map<String,Object> paramMap);
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -31,7 +31,7 @@ public class SeckillDaoTest {
 
 
     @Test
-    public void reduceNumber() throws Exception {
+    public void queryById() throws Exception {
         long id = 1000;
         Seckill seckill = seckillDao.queryById(id);
         System.out.println(seckill.getName());
@@ -39,7 +39,7 @@ public class SeckillDaoTest {
     }
 
     @Test
-    public void queryById() throws Exception {
+    public void queryAll() throws Exception {
 //        由于java不会保存形参记录（名），所有多参需要包装或使用mybatis提供的注解@Param
         List<Seckill> seckills = seckillDao.queryAll(0,100);
         for (Seckill seckill: seckills) {
@@ -50,7 +50,7 @@ public class SeckillDaoTest {
     }
 
     @Test
-    public void queryAll() throws Exception {
+    public void reduceNumber() throws Exception {
 
         Date killTime = new Date();
         int upadateCount = seckillDao.reduceNumber(1000L, killTime);

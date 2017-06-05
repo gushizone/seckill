@@ -64,24 +64,25 @@ public class SeckillServiceImpl implements SeckillService{
 //        2.访问数据库（若redis没有）
             seckill = seckillDao.queryById(seckillId);
             if(seckill == null) {
+//              seckillId不存在
                 return new Exposer(false, seckillId);
             }else {
 //         3. 放入redis
                 redisDao.putSeckill(seckill);
             }
         }
-
-
         Date startTime = seckill.getStartTime();
         Date endTime = seckill.getEndTime();
         Date nowTime = new Date();
         if (nowTime.getTime() < startTime.getTime()
                 || nowTime.getTime() > endTime.getTime()) {
+//          时间不满足
             return new Exposer(false, seckillId, nowTime.getTime(), startTime.getTime(),
                     endTime.getTime());
         }
 //        转化特定字符串的过程，不可逆
-        String md5 = getMD5(seckillId); //TODO
+        String md5 = getMD5(seckillId);
+//      暴露
         return new Exposer(true, md5, seckillId);
     }
 
@@ -101,6 +102,7 @@ public class SeckillServiceImpl implements SeckillService{
      * 2：保证事务方法的执行时间尽可能短，不用穿插其他网络操作RPC/HTTP请求或剥离到事务方法外部
      * 3：不是所有的方法需要事务，如：只读操作不需要事务控制
      */
+//    此实验操作判断交给了数据库//TODO 优劣
     public SeckillExecution executeSeckill(long seckillId, long userPhone, String md5)
             throws SeckillException, RepeatKillException, SeckillCloseException {
 
@@ -109,8 +111,6 @@ public class SeckillServiceImpl implements SeckillService{
         }
 //        执行秒杀逻辑：减库存 + 记录购买行为
         Date nowtime = new Date();
-
-
         try {
 //            记录购买行为
             int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
@@ -125,19 +125,18 @@ public class SeckillServiceImpl implements SeckillService{
 //            没有更新到记录，秒杀结束, rollback
                     throw new SeckillCloseException("seckill is closed");
                 } else {
-//             秒杀成功, commit
+//             秒杀成功, 返回dto，commit
                     SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
                     return new SeckillExecution(seckillId, SeckillStatEnum.SUCCESS, successKilled);
                 }
             }
-
         } catch (SeckillCloseException e1) {
             throw e1;
         } catch (RepeatKillException e2) {
             throw e2;
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
-//            所有编译器异常转化为运行期异常(spring声明式事务会自动rollback)
+//            所有编译期异常转化为运行期异常(spring声明式事务会自动rollback)
             throw new SeckillException("seckill inner error:" + e.getMessage());
         }
     }
@@ -169,8 +168,6 @@ public class SeckillServiceImpl implements SeckillService{
             logger.error(e.getMessage(), e);
             return new SeckillExecution(seckillId,SeckillStatEnum.INNER_ERROR);
         }
-
-
-
     }
+
 }

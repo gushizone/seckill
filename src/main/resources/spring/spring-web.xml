@@ -11,31 +11,31 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--配置springMVC-->
-    <!--1: 开启Spring注解模式
+    <!--1[: 开启Spring注解模式
             简化配置：1)自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter
                      2)提供一系列：数据绑定，数字和日期的format: @NumberFormat, @DataTimeFormat
                         xml,json默认读写支持(不需要单独配置)
     -->
     <mvc:annotation-driven />
 
-    <!--2: 静态资源默认servlet配置
+    <!--2: 静态资源默认servlet配置(方式一，推荐)
             1)：加入对静态资源的处理：js，gif，png
             2)：运行使用"/"做整体映射
     -->
     <mvc:default-servlet-handler />
-    <!--静态资源处理，css/js/img****注意 “/”-->
+    <!--静态资源处理(方式二，不推荐)，css/js/img,注意 “/”-->
     <!--<mvc:resources mapping="/resources/**" location="../../resources/" />-->
 
-    <!--3:配置jsp 显示ViewResolver-->
+    <!--3:配置ViewResolver
+            1): 可以配置多个ViewResolver，可以使用order属性排序
+            2): InternalResource;eViewResolver一般处理为jsp，需要放在最后-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
         <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <!--4：扫描web相关的bean-->
+    <!--4：扫描web相关的bean,此实验根据包分类不需要组件过滤(@Controller)-->
     <context:component-scan base-package="org.seckill.web" />
-
-
 
 </beans>

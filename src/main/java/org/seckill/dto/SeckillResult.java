@@ -2,13 +2,13 @@ package org.seckill.dto;
 
 /**
  * Created by Apple on 2017/4/28.
+ * 所有Ajax请求返回类型，封装json结果
  */
-//所要Ajax请求返回类型，封装json结果
 public class SeckillResult<T> {
 
-//    true通知用户（初始设置似乎有问题）
+//    true通知用户（初始设置似乎有问题，在SeckillResult<Exposer>(true,exposer)时）
     private boolean success;
-
+//    优
     private  T data;
 
     private  String error;

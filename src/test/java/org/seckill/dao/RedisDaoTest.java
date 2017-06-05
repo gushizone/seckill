@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class RedisDaoTest{
 
-    private long id = 1001;
+    private long id = 1001L;
 
     @Autowired
     private RedisDao redisDao;
@@ -37,7 +37,6 @@ public class RedisDaoTest{
                 System.out.println(result);
                 seckill = redisDao.getSeckill(id);
                 System.out.println(seckill);
-
             }
         }
 

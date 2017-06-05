@@ -1,7 +1,5 @@
 package org.seckill.dto;
 
-import org.seckill.entity.Seckill;
-
 /**
  * 暴露秒杀接口DTO（数据传输层）
  * Created by Apple on 2017/4/27.
@@ -23,13 +21,13 @@ public class Exposer {
 //     结束时间
     private long end;
 
-
+//    暴露
     public Exposer(boolean exposed, String md5, long seckillId) {
         this.exposed = exposed;
         this.md5 = md5;
         this.seckillId = seckillId;
     }
-
+//    时间不满足
     public Exposer(boolean exposed, long seckillId, long now, long start, long end) {
         this.exposed = exposed;
         this.seckillId = seckillId;
@@ -37,7 +35,7 @@ public class Exposer {
         this.start = start;
         this.end = end;
     }
-
+//    seckillId不存在
     public Exposer(boolean exposed, long seckillId) {
         this.exposed = exposed;
         this.seckillId = seckillId;

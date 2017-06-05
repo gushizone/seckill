@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!--扫描Service包下所有使用注解的类型-->
+    <!--扫描Service包下所有使用注解的类型,@Service注解,@Autowired-->
     <context:component-scan base-package="org.seckill.service" />
 
     <!--配置事务管理器-->
@@ -23,8 +23,5 @@
         默认使用注解来管理事务行为
     -->
     <tx:annotation-driven transaction-manager="transactionManager" />
-
-
-
 
 </beans>
