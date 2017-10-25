@@ -3,6 +3,7 @@
 > 这里只是使用初级的解决方案，零成本的解决高并发问题。
 
 ## 项目内容
+> [操作流程](https://github.com/gushizone/seckill/blob/master/src/main/resources/%E7%A7%92%E6%9D%80%E6%B5%81%E7%A8%8B.png)
 
 ### SSM框架开发
 > 请参考本项目[wiki](https://github.com/gushizone/seckill/wiki)
@@ -20,11 +21,11 @@
   - 简单优化：调整语句顺序
   - 深度优化：事务SQL存放在数据库端(存储过程)
   
-  ## 项目环境
-  
-  - window 7
-  - IDEA/maven
-  - jdk 1.7
-  - mysql/redis
+## 项目环境
+
+- window 7
+- IDEA/maven
+- jdk 1.7
+- mysql/redis
   
   
